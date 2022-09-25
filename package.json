@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "build:github": "./node_modules/@angular/cli/bin/ng.js build --base-href / ",
     "test": "ng test"
   },
   "private": true,

@@ -27,7 +27,7 @@ jobs:
       run: npm ci
         
     - name: Build
-      run: npm run build:github:static
+      run: npm run build:github
 
     - name: Copy index.html to 404.html
       run: |
