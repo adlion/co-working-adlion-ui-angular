@@ -1,0 +1,21 @@
+<div class="wrapper">
+  <div class="sidebar" [ngClass]="sidebarExpanded ? 'sidebar-expand' : ''">
+    <app-sidebar
+      [listItems]="(apiResponse$ | async)!"
+      (emitListExpand)="sidebarOnExpand($event)"
+      (emitFields)="sidebarOnFields($event)"
+    ></app-sidebar>
+  </div>
+
+  <div class="chart">
+    <div class="chart-pie">
+      <canvas
+        baseChart
+        [data]="pieChartData"
+        [type]="'pie'"
+        [options]="pieChartOptions"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>

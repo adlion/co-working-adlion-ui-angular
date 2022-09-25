@@ -1,0 +1,91 @@
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #ffffff;
+  font-size: 1.2em;
+}
+
+.tapro-logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 16px;
+  gap: 16px;
+  width: 100%;
+  img {
+    height: 80px;
+  }
+}
+
+.group {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  font-weight: 600;
+  width: 100%;
+  &:active {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  &__icon {
+    position: relative;
+    span {
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        right: 0.2em;
+        top: 50%;
+        height: 0.7em;
+        width: 0.7em;
+        transform: translateY(-50%) rotateZ(45deg);
+        border: solid 2px var(--txt);
+        border-top: none;
+        border-left: none;
+      }
+    }
+  }
+
+  input {
+    opacity: 0;
+    &:checked + span {
+      &::before {
+        border: solid 2px var(--txt);
+        border-bottom: none;
+        border-right: none;
+      }
+    }
+
+    &:focus + span::before,
+    &:active + span::before {
+      border-color: var(--main);
+    }
+  }
+
+  &__items {
+    padding-left: 16px;
+    transform: scaleY(0);
+    height: 0;
+    will-change: transform;
+
+    &-expand {
+      transform: scaleY(100%);
+      height: initial;
+    }
+  }
+}
+
+@media (hover: hover) {
+  .group {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+}

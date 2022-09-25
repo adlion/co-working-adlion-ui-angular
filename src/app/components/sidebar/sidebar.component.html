@@ -1,0 +1,79 @@
+<div class="tapro-logo">
+  <img src="assets/logo1_final_text_256.png" alt="" />
+</div>
+
+<div class="h-divider"></div>
+
+
+<ng-container *ngFor="let el of listItems">
+  <ng-container
+    *ngTemplateOutlet="isListItem; context: { $implicit: el }"
+  ></ng-container>
+</ng-container>
+
+<ng-template #isListItem let-field>
+  <ng-container
+    [ngTemplateOutlet]="
+      field.type !== 'object' &&
+      field.type !== 'array' &&
+      field.type !== 'unknown'
+        ? listItem
+        : isGroupItem
+    "
+    [ngTemplateOutletContext]="{ $implicit: field }"
+  >
+  </ng-container>
+</ng-template>
+
+<ng-template #isGroupItem let-listItem>
+  <ng-container
+    [ngTemplateOutlet]="listItem.type === 'object' ? objectType : arrayType"
+    [ngTemplateOutletContext]="{ $implicit: listItem }"
+  >
+  </ng-container>
+</ng-template>
+
+<ng-template #arrayType let-field>
+  <div class="list">
+    <div class="group" (click)="groupOnClick(field.navKeyId)">
+      <span class="group__label">{{ field.name }}</span>
+      <div class="group__icon">
+        <input
+          type="checkbox"
+          [checked]="expandGroup.indexOf(field.navKeyId) > -1"
+        />
+        <span></span>
+      </div>
+    </div>
+    <div
+      class="group__items"
+      [ngClass]="
+        expandGroup.indexOf(field.navKeyId) > -1 ? 'group__items-expand' : ''
+      "
+    >
+      <ng-container *ngFor="let el of field.nested">
+        <ng-container
+          [ngTemplateOutlet]="isListItem"
+          [ngTemplateOutletContext]="{ $implicit: el }"
+        ></ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #objectType let-field>
+  <ng-container *ngFor="let el of field.nested">
+    <ng-container
+      [ngTemplateOutlet]="isListItem"
+      [ngTemplateOutletContext]="{ $implicit: el }"
+    ></ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #listItem let-listItem>
+  <app-list-item
+    [item]="listItem"
+    [selectedItems]="selectedFields"
+    (emitCheck)="itemOnClick(listItem.navKeyId)"
+  ></app-list-item>
+</ng-template>
